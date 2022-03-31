@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import menu from "../../assets/icons/menu.svg";
+import menu from "@icons/menu.svg";
 import {
   IconContainer,
   LogoContainer,
@@ -23,6 +23,10 @@ const Navbar: FC<NavbarProps> = (props) => {
     dynamicWidth: 100,
     dynamicHeight: 200,
   });
+
+  useEffect(() => {
+    setDimension();
+  }, [])
 
   const setDimension = () => {
     getDimension({
@@ -78,7 +82,7 @@ const Navbar: FC<NavbarProps> = (props) => {
     <NavbarContainer>
       {screenSize.dynamicWidth < 991.99 && (
         <MenuButton onClick={playAnimation}>
-          <IconContainer src={menu} />
+          <IconContainer src={menu.src} />
         </MenuButton>
       )}
       {menuOpened && <SideMenu windowWidth={328.33} style={style} />}

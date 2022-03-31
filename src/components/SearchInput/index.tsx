@@ -29,7 +29,7 @@ const SearchInput: FC<SearchInputProps> = (props) => {
       }}
       onClick={() => inputRef.current?.focus()}
     >
-      <PinContainer src={pin} />
+      <PinContainer src={pin.src} />
       <InputContainer>
         <TextInput
           ref={inputRef}

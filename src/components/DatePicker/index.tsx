@@ -16,10 +16,10 @@ import {
   YearText,
 } from "./styles";
 
-import chevronDoubleLeft from "../../assets/icons/chevron-double-left.svg";
-import chevronDoubleRight from "../../assets/icons/chevron-double-right.svg";
-import chevronLeft from "../../assets/icons/chevron-left.svg";
-import chevronRight from "../../assets/icons/chevron-right.svg";
+import chevronDoubleLeft from "@icons/chevron-double-left.svg";
+import chevronDoubleRight from "@icons/chevron-double-right.svg";
+import chevronLeft from "@icons/chevron-left.svg";
+import chevronRight from "@icons/chevron-right.svg";
 
 interface DatePickerProps {
   openDatePicker: boolean;
@@ -181,24 +181,24 @@ const DatePicker: FC<DatePickerProps> = (props) => {
     <BackDrop style={styles[0] || undefined} onClick={closeBackDrop}>
       <DatePickerContainer
         style={styles[1] || undefined}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
       >
         <HeaderContainer>
           <ChangeButton onClick={() => changeYear("back")}>
-            <IconContainer src={chevronDoubleLeft} />
+            <IconContainer src={chevronDoubleLeft.src} />
           </ChangeButton>
           <ChangeButton onClick={() => changeMonth("back")}>
-            <IconContainer src={chevronLeft} />
+            <IconContainer src={chevronLeft.src} />
           </ChangeButton>
           <DateContainer>
             <YearText>{selectedYear}</YearText>
             <MonthText>{Months[selectedMonth]}</MonthText>
           </DateContainer>
           <ChangeButton onClick={() => changeMonth("front")}>
-            <IconContainer src={chevronRight} />
+            <IconContainer src={chevronRight.src} />
           </ChangeButton>
           <ChangeButton onClick={() => changeYear("front")}>
-            <IconContainer src={chevronDoubleRight} />
+            <IconContainer src={chevronDoubleRight.src} />
           </ChangeButton>
         </HeaderContainer>
         <CalendarContainer>

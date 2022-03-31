@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import searchIcon from "../../assets/icons/bx_bx-search.svg";
+import searchIcon from "@icons/bx_bx-search.svg";
 import DateContainer from "../DateContainer";
 import { IconContainer } from "../DatePicker/styles";
 import SearchInput from "../SearchInput";
@@ -14,7 +14,7 @@ const SearchBox: FC<{}> = (props) => {
         <DateContainer />
         <DateContainer />
         <SearchButton>
-          <IconContainer src={searchIcon} />
+          <IconContainer src={searchIcon.src} />
         </SearchButton>
       </SearchContainer>
     </SearchOuterContainer>

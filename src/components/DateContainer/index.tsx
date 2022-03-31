@@ -48,7 +48,7 @@ const DateContainer: FC<DateContainerProps> = (props) => {
         !isOnFocus ? setPlayAnimation((prevState) => !prevState) : null
       }
     >
-      <CalendarContainer src={calendar} />
+      <CalendarContainer src={calendar.src} />
       <ItensContainer>
         <DateText>{formatDate(selectedDate)}</DateText>
         <Animate

@@ -33,7 +33,7 @@ const SideMenu: FC<SideMenuProps> = (props) => {
         <SearchRow>
           <SearchInput />
           <SearchButton>
-            <IconContainer src={searchIcon} />
+            <IconContainer src={searchIcon.src} />
           </SearchButton>
         </SearchRow>
         <ButtonContainer>
