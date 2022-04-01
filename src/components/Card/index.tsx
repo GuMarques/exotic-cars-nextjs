@@ -15,12 +15,13 @@ interface CardProps {
   brand: string;
   model: string;
   image: string;
+  onClick?: (arg: any) => void
 }
 
 const Card: FC<CardProps> = (props) => {
-  const { price, brand, model, image } = props;
+  const { price, brand, model, image, onClick } = props;
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick}>
       <BrandName>{brand}</BrandName>
       <ModelName>{model.toUpperCase()}</ModelName>
       <CarImage src={image} alt={model} layout="intrinsic"/>

@@ -5,10 +5,16 @@ const nextConfig = {
     loaders: [
       {
         test: /\.json$/,
-        loader: 'json-loader'
-      }
-    ]
-  }
+        loader: "json-loader",
+      },
+    ],
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;

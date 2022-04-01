@@ -1,32 +1,56 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import { Navbar, CustomLink, Card } from "@components";
-import data from "../dummyData.json";
-import { CarsBoard } from "../styles/home";
-import images from "../src/shared/utils/import-images";
-import { useEffect } from "react";
-export default function Home() {
-  useEffect(() => {
+import path from "path";
+import fs from "fs/promises";
+import { useRouter } from "next/router";
+import { CarsBoard } from "@styles/home";
+import images from "@utils/import-images";
+import { Navbar, Card } from "@components";
+import { GetStaticProps as ServerProps } from "next";
 
-    console.log(images);
-  }, [])
+interface HomeProps {
+  cars: {
+    id: string;
+    brand: string;
+    model: string;
+    price: string;
+    logo: string;
+    number: number;
+    color: string;
+  }[];
+}
+
+export default function Home({ cars }: HomeProps) {
+  const router = useRouter();
+  const cardClickHandler = (id: string) => {
+    router.push(`/details/${id}`);
+  };
   return (
     <div>
       <Navbar />
       <CarsBoard>
-        {data.cars.map((car: any) => {
+        {cars.map((car: any) => {
           return (
-            <CustomLink href={`/details/${car.id}`} key={car.id}>
-              <Card
-                brand={car.brand}
-                model={car.model}
-                price={car.price}
-                image={images[`${car.id}.png`]}
-              />
-            </CustomLink>
+            <Card
+              onClick={() => cardClickHandler(car.id)}
+              brand={car.brand}
+              model={car.model}
+              price={car.price}
+              image={images[`${car.id}.png`]}
+            />
           );
         })}
       </CarsBoard>
     </div>
   );
 }
+
+export const getStaticProps: ServerProps = async (_) => {
+  const filePath = path.join(process.cwd(), "src", "data", "dummyData.json");
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData.toString());
+  return {
+    props: {
+      cars: data.cars,
+    },
+    revalidate: 3600,
+  };
+};

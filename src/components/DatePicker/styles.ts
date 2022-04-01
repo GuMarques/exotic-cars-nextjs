@@ -114,11 +114,10 @@ export const DaysOfMonthContainer = styled.div`
 
 export const DaysOfMonthButton = styled.button`
   flex: 0 0 11%;
-  /* border: 1px solid black; */
-  border: none;
+;  border: none;
   border-radius: 100px;
   margin: 3px;
-  height: 33px;
+  height: 26.4px;
   padding: 0;
   align-self: center;
   background-color: white;

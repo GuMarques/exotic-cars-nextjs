@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Animate } from "react-simple-animate";
 import calendar from "../../assets/icons/calendar-sharp.svg";
 import formatDate from "../../shared/utils/format-date";
