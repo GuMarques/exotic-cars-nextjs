@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { CarsBoard } from "@styles/home";
 import images from "@utils/import-images";
 import { Navbar, Card } from "@components";
-import { GetStaticProps as ServerProps } from "next";
+import { GetStaticProps } from "next";
 
 interface HomeProps {
   cars: {
@@ -43,7 +43,7 @@ export default function Home({ cars }: HomeProps) {
   );
 }
 
-export const getStaticProps: ServerProps = async (_) => {
+export const getStaticProps: GetStaticProps = async (_) => {
   const filePath = path.join(process.cwd(), "src", "data", "dummyData.json");
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData.toString());
