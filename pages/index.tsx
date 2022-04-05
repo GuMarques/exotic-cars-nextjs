@@ -35,6 +35,7 @@ export default function Home({ cars }: HomeProps) {
               model={car.model}
               price={car.price}
               image={images[`${car.id}.png`]}
+              key={car.id}
             />
           );
         })}

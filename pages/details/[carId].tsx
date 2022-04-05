@@ -1,8 +1,9 @@
 import path from "path";
 import fs from "fs/promises";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import back from "@icons/arrow-left.svg";
+import forward from "@icons/arrow-right.svg";
 import images from "@utils/import-images";
 import { CustomLink, Navbar } from "@components";
 import { GetStaticProps, GetStaticPaths } from "next";
@@ -22,7 +23,10 @@ import {
   HeaderInfos,
   IconContainer,
   Logo,
+  LogoContainer,
   Name,
+  OrderButton,
+  OrderContainer,
   OuterContainer,
   Price,
   SlideImage,
@@ -44,9 +48,9 @@ interface DetailsProps {
 }
 
 export default function Details({ cars }: DetailsProps) {
-  const [selectedCar, setSelectedCar] = useState<Car>();
-  const [secondCar, setSecondCar] = useState<Car>();
-  const [thirtyCar, setThirtyCar] = useState<Car>();
+  const [selectedCar, setSelectedCar] = useState<Car>(cars[0]);
+  const [secondCar, setSecondCar] = useState<Car>(cars[1]);
+  const [thirtyCar, setThirtyCar] = useState<Car>(cars[2]);
   const [screenSize, getDimension] = useState({
     dynamicWidth: 100,
     dynamicHeight: 200,
@@ -64,23 +68,18 @@ export default function Details({ cars }: DetailsProps) {
   useEffect(() => {
     const carId = router.query.carId;
     if (carId) {
-      setSelectedCar(findData(carId[0]));
+      let car = findData(carId.toString());
+      setSelectedCar(findData(carId.toString()));
+
+      setSecondCar(
+        car.number === 1 ? cars[15] : cars[cars.indexOf(car!) - 1]
+      );
+  
+      setThirtyCar(
+        car.number === 16 ? cars[0] : cars[cars.indexOf(car!) + 1]
+      );
     }
-  });
-
-  useEffect(() => {
-    setSecondCar(
-      selectedCar?.number === 1
-        ? cars[15]
-        : cars[cars.indexOf(selectedCar!) - 1]
-    );
-
-    setThirtyCar(
-      selectedCar?.number === 16
-        ? cars[0]
-        : cars[cars.indexOf(selectedCar!) + 1]
-    );
-  }, [selectedCar]);
+  }, []);
 
   useEffect(() => {
     setDimension();
@@ -111,45 +110,73 @@ export default function Details({ cars }: DetailsProps) {
       <OuterContainer>
         <CarShow>
           <Header>
-            <Logo src={images[`${selectedCar?.logo}.png`]} />
+            <LogoContainer>
+              <Logo
+                src={images[`${selectedCar.logo}.png`]}
+                alt={selectedCar.brand}
+                layout="responsive"
+              />
+            </LogoContainer>
             <HeaderInfos>
               <Name>
-                {selectedCar?.brand} {selectedCar?.model}
+                {selectedCar.brand} {selectedCar.model}
               </Name>
-              <Price>${selectedCar?.price}/day</Price>
+              <Price>${selectedCar.price}/day</Price>
             </HeaderInfos>
           </Header>
           <CustomLink href="/">
             <BackButton>
-              <IconContainer src={back} />
+              <IconContainer src={back} alt="back arrow" layout="fixed" width={50} height={30}/>
               Back to catalog
             </BackButton>
           </CustomLink>
-          <CarImage src={images[`${selectedCar?.id}-side.png`]} />
+          <CarImage
+            src={images[`${selectedCar.id}-side.png`]}
+            alt={selectedCar.model}
+            layout="intrinsic"
+          />
           <CarInfo>
-            <CarNumber>{FormatCarNumber(selectedCar?.number || 0)} </CarNumber>
-            <CarText>{selectedCar?.color}</CarText>
+            <CarNumber>{FormatCarNumber(selectedCar.number || 0)} </CarNumber>
+            <CarText>{selectedCar.color}</CarText>
           </CarInfo>
         </CarShow>
+        <OrderContainer>
+          <OrderButton>
+            Order Now
+            <IconContainer src={forward} alt="forward arrow" layout="fixed" width={50} height={30} />
+          </OrderButton>
+        </OrderContainer>
         <CarsNavigation>
           <Arrow onClick={prevClickHandler}>
-            <ArrowIcon src={back} />
+            <ArrowIcon src={back} layout="fixed" width={30} height={30} />
           </Arrow>
           {screenSize.dynamicWidth > 809 && (
             <CarInactive>
-              <SlideImage src={images[`${secondCar?.id}-side.png`]} />
+              <SlideImage
+                src={images[`${secondCar.id}-side.png`]}
+                alt={secondCar.model}
+                layout="intrinsic"
+              />
             </CarInactive>
           )}
           <CarActive>
-            <SlideImage src={images[`${selectedCar?.id}-side.png`]} />
+            <SlideImage
+              src={images[`${selectedCar.id}-side.png`]}
+              alt={selectedCar.model}
+              layout="intrinsic"
+            />
           </CarActive>
           {screenSize.dynamicWidth > 809 && (
             <CarInactive>
-              <SlideImage src={images[`${thirtyCar?.id}-side.png`]} />
+              <SlideImage
+                src={images[`${thirtyCar.id}-side.png`]}
+                alt={thirtyCar.model}
+                layout="intrinsic"
+              />
             </CarInactive>
           )}
           <Arrow onClick={nextClickHandler}>
-            <ArrowIcon src={back} right />
+            <ArrowIcon src={forward} layout="fixed" width={30} height={30} />
           </Arrow>
         </CarsNavigation>
       </OuterContainer>
@@ -166,7 +193,7 @@ const getData = async () => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const data = await getData();
   const ids = data.cars.map((car: any) => car.id);
-  const paths = ids.map((id: string) => ({params: { carId: id}}))
+  const paths = ids.map((id: string) => ({ params: { carId: id } }));
 
   return {
     paths: paths,

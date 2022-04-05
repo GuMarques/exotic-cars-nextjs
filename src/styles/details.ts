@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styled from "styled-components";
 
 export const OuterContainer = styled.div`
@@ -73,8 +74,18 @@ export const HeaderInfos = styled.div`
   flex-direction: column;
 `;
 
-export const Logo = styled.img`
-  /* max-width: 91px; */
+export const LogoContainer = styled.div`
+  height: 123px;
+  margin-right: 10px;
+  width: 120px;
+  margin-top: 20px;
+  margin-bottom: auto;
+  @media (max-width: 992px) {
+    width: 89px;
+  }
+`;
+
+export const Logo = styled(Image)`
   max-height: 123px;
   margin-right: 40px;
   @media (max-width: 992px) {
@@ -115,6 +126,7 @@ export const BackButton = styled.button`
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s linear;
+  white-space: nowrap;
   :hover {
     background-color: #313136;
     color: #ffffff !important;
@@ -132,14 +144,14 @@ export const BackButton = styled.button`
   }
 `;
 
-export const IconContainer = styled.img`
+export const IconContainer = styled(Image)`
   margin-right: 10px;
   width: 24px;
   filter: invert(15%) sepia(8%) saturate(547%) hue-rotate(201deg)
     brightness(98%) contrast(88%);
 `;
 
-export const CarImage = styled.img`
+export const CarImage = styled(Image)`
   margin-top: 96px;
   height: 380px;
   @media (max-width: 992px) {
@@ -211,7 +223,7 @@ export const Arrow = styled.button`
   z-index: 1;
 `;
 
-export const ArrowIcon = styled.img<{ right?: boolean }>`
+export const ArrowIcon = styled(Image)<{ right?: boolean }>`
   width: 24px;
   transform: ${({ right }) => (right ? "scaleX(-1)" : "none")};
   filter: invert(96%) sepia(9%) saturate(0%) hue-rotate(88deg) brightness(103%)
@@ -252,8 +264,48 @@ export const CarActive = styled.div`
   }
 `;
 
-export const SlideImage = styled.img`
+export const SlideImage = styled(Image)`
   width: 100%;
   position: relative;
   left: 20px;
+`;
+
+export const OrderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+
+export const OrderButton = styled.button`
+  border-radius: 25px;
+  border: 1px solid #313136;
+  font-weight: 300;
+  font-size: 1rem;
+  color: #FFFFFF;
+  background-color: #313136;
+  padding: 15px 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  white-space: nowrap;
+  img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(201deg) brightness(106%) contrast(106%);
+  }
+  /* :hover {
+    background-color: #FFFFFF;
+    color: #313136 !important;
+    img {
+      filter: invert(16%) sepia(11%) saturate(423%) hue-rotate(202deg) brightness(92%) contrast(88%);
+    }
+  } */
+  @media (max-width: 992px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 809px) {
+    font-size: 0.8rem;
+    padding: 7px 8px;
+  }
 `;
