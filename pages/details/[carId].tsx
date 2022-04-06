@@ -13,6 +13,7 @@ import {
   BackButton,
   CarActive,
   CarImage,
+  CarImageContainer,
   CarInactive,
   CarInfo,
   CarNumber,
@@ -71,13 +72,9 @@ export default function Details({ cars }: DetailsProps) {
       let car = findData(carId.toString());
       setSelectedCar(findData(carId.toString()));
 
-      setSecondCar(
-        car.number === 1 ? cars[15] : cars[cars.indexOf(car!) - 1]
-      );
-  
-      setThirtyCar(
-        car.number === 16 ? cars[0] : cars[cars.indexOf(car!) + 1]
-      );
+      setSecondCar(car.number === 1 ? cars[15] : cars[cars.indexOf(car!) - 1]);
+
+      setThirtyCar(car.number === 16 ? cars[0] : cars[cars.indexOf(car!) + 1]);
     }
   }, []);
 
@@ -105,7 +102,14 @@ export default function Details({ cars }: DetailsProps) {
   };
 
   return (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        height: "100%",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Navbar />
       <OuterContainer>
         <CarShow>
@@ -115,6 +119,7 @@ export default function Details({ cars }: DetailsProps) {
                 src={images[`${selectedCar.logo}.png`]}
                 alt={selectedCar.brand}
                 layout="responsive"
+                priority
               />
             </LogoContainer>
             <HeaderInfos>
@@ -126,15 +131,26 @@ export default function Details({ cars }: DetailsProps) {
           </Header>
           <CustomLink href="/">
             <BackButton>
-              <IconContainer src={back} alt="back arrow" layout="fixed" width={50} height={30}/>
+              <IconContainer
+                src={back}
+                alt="back arrow"
+                layout="fixed"
+                width={50}
+                height={30}
+              />
               Back to catalog
             </BackButton>
           </CustomLink>
-          <CarImage
-            src={images[`${selectedCar.id}-side.png`]}
-            alt={selectedCar.model}
-            layout="intrinsic"
-          />
+          <CarImageContainer>
+            <CarImage
+              src={images[`${selectedCar.id}-side.png`]}
+              alt={selectedCar.model}
+              height={353}
+              layout="fill"
+              objectFit="contain"
+              priority
+            />
+          </CarImageContainer>
           <CarInfo>
             <CarNumber>{FormatCarNumber(selectedCar.number || 0)} </CarNumber>
             <CarText>{selectedCar.color}</CarText>
@@ -143,7 +159,13 @@ export default function Details({ cars }: DetailsProps) {
         <OrderContainer>
           <OrderButton>
             Order Now
-            <IconContainer src={forward} alt="forward arrow" layout="fixed" width={50} height={30} />
+            <IconContainer
+              src={forward}
+              alt="forward arrow"
+              layout="fixed"
+              width={50}
+              height={30}
+            />
           </OrderButton>
         </OrderContainer>
         <CarsNavigation>
@@ -151,11 +173,13 @@ export default function Details({ cars }: DetailsProps) {
             <ArrowIcon src={back} layout="fixed" width={30} height={30} />
           </Arrow>
           {screenSize.dynamicWidth > 809 && (
-            <CarInactive>
+            <CarInactive onClick={prevClickHandler}>
               <SlideImage
                 src={images[`${secondCar.id}-side.png`]}
                 alt={secondCar.model}
                 layout="intrinsic"
+                priority
+                quality={30}
               />
             </CarInactive>
           )}
@@ -164,14 +188,17 @@ export default function Details({ cars }: DetailsProps) {
               src={images[`${selectedCar.id}-side.png`]}
               alt={selectedCar.model}
               layout="intrinsic"
+              priority
             />
           </CarActive>
           {screenSize.dynamicWidth > 809 && (
-            <CarInactive>
+            <CarInactive onClick={nextClickHandler}>
               <SlideImage
                 src={images[`${thirtyCar.id}-side.png`]}
                 alt={thirtyCar.model}
                 layout="intrinsic"
+                priority
+                quality={30}
               />
             </CarInactive>
           )}

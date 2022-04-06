@@ -64,7 +64,7 @@ export const Header = styled.div`
   margin: 0;
   @media (max-width: 992px) {
     position: relative;
-    margin-left: auto;
+    margin-left: 5px;
     margin-right: auto;
   }
 `;
@@ -72,13 +72,16 @@ export const Header = styled.div`
 export const HeaderInfos = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 992px) {
+    align-self: flex-start;
+    justify-content: center;
+  }
 `;
 
 export const LogoContainer = styled.div`
   height: 123px;
   margin-right: 10px;
   width: 120px;
-  margin-top: 20px;
   margin-bottom: auto;
   @media (max-width: 992px) {
     width: 89px;
@@ -127,6 +130,8 @@ export const BackButton = styled.button`
   cursor: pointer;
   transition: all 0.2s linear;
   white-space: nowrap;
+  align-self: flex-end;
+  margin-bottom: 50px;
   :hover {
     background-color: #313136;
     color: #ffffff !important;
@@ -141,6 +146,8 @@ export const BackButton = styled.button`
   @media (max-width: 809px) {
     font-size: 0.8rem;
     padding: 7px 8px;
+    align-self: flex-start;
+    margin-bottom: 0;
   }
 `;
 
@@ -231,6 +238,7 @@ export const ArrowIcon = styled(Image)<{ right?: boolean }>`
 `;
 
 export const CarInactive = styled.div`
+  cursor: pointer;
   background: #cecece 0% 0% no-repeat padding-box;
   box-shadow: 0px 8px 20px #0000001a;
   max-height: 180px;
@@ -307,5 +315,22 @@ export const OrderButton = styled.button`
   @media (max-width: 809px) {
     font-size: 0.8rem;
     padding: 7px 8px;
+  }
+`;
+
+export const CarImageContainer = styled.div`
+  height: 353px;
+  width: 80%;
+  position: relative;
+  max-height: 353px;
+  max-width: 80%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  align-self: none;
+  margin-top: 80px;
+  @media (max-width: 992px) {
+    align-self: center;
+    margin-top: 0;
   }
 `;
